@@ -13,6 +13,11 @@ TagManager:
   - blue
   - punchBox
   - colorWall
+  - stopTweening
+  - obstacle
+  - fightingPointTrigger
+  - BossHand
+  - PlayerHand
   layers:
   - Default
   - TransparentFX
@@ -23,9 +28,9 @@ TagManager:
   - Ground
   - PunchBlockLayer
   - Player
-  - 
-  - 
-  - 
+  - Hand
+  - Boss
+  - BossHand
   - 
   - 
   - 

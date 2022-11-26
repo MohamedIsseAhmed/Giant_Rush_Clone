@@ -52,8 +52,12 @@ public class ScaleUpAnChangeColor : MonoBehaviour
     private Color targetColor;
     private ParticleSystem.MainModule mainModule;
     private LevelText levelText;
+
+    public event EventHandler OnD›edEvent;
+    public static ScaleUpAnChangeColor instance;
     private void Awake()
     {
+        instance = this;
         levelText = GetComponent<LevelText>();
         player = GetComponent<Player>();
         skinnedMeshRenderer = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
@@ -81,57 +85,72 @@ public class ScaleUpAnChangeColor : MonoBehaviour
  
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag(targetTag))
+        if (!player.IsFighting())
         {
-            targetColor = material.color;
-            light.color = targetColor;
-            LerpLightIntensity();
-            Vector3 myScale= transform.localScale;
-            PlayCollisionParticle(material.color);
-            transform.DOScale(myScale * scale›ncreaserFactor, scaleTime).OnComplete(() =>
+            if (other.transform.CompareTag(targetTag))
             {
-                //collosionParticle.gameObject.SetActive(false);
-            });
-         
-            OnColidedWithStickmanIncreaseLevelNumber?.Invoke(this, 1);
-            Destroy(other.gameObject);
-        }
-       
-        else if(other.transform.CompareTag("punchBox"))
-        {
-            PunchWall punchWall= other.transform.GetComponent<PunchWall>();
-
-            if (punchWall != null)
-            {
-                if (punchWall.GetLevelNumber() <= levelText.GetLevelNumber())
-                {
-                    shoulPunchTheWall = true;
-                    player.PlayPunchAnimation();
-                    CamerController.instance.ShakeCamera(shakeIntensity, shakeTime, StopBoxCastingAction);
-                    StartCoroutine(ApplyExplosion());
-                }
-                
-            }
-            
-        }
-       
-        else
-        { 
-            
-            if (!other.transform.CompareTag("colorWall"))
-            {
+                targetColor = material.color;
+                light.color = targetColor;
+                LerpLightIntensity();
                 Vector3 myScale = transform.localScale;
-                //scale›ncreaserFactor -= scaleModiferDecrease;
-                //ClamScaleIncreaseFactorf();
-                if (transform.localScale.x >= scale›ncreaserFactorMin)
+                PlayCollisionParticle(material.color);
+                transform.DOScale(myScale * scale›ncreaserFactor, scaleTime).OnComplete(() =>
                 {
-                    transform.DOScale(myScale * scaleModiferDecrease, scaleTime);
-                }
-                OnColidedWithStickmanIncreaseLevelNumber?.Invoke(this, -1);
+                    //collosionParticle.gameObject.SetActive(false);
+                });
+
+                OnColidedWithStickmanIncreaseLevelNumber?.Invoke(this, 1);
                 Destroy(other.gameObject);
             }
-         
+
+            else if (other.transform.CompareTag("punchBox"))
+            {
+                PunchWall punchWall = other.transform.GetComponent<PunchWall>();
+
+                if (punchWall != null)
+                {
+                    if (punchWall.GetLevelNumber() <= levelText.GetLevelNumber())
+                    {
+                        shoulPunchTheWall = true;
+                        player.PlayAnimation("Punch");
+                        CamerController.instance.ShakeCamera(shakeIntensity, shakeTime, StopBoxCastingAction);
+                        StartCoroutine(ApplyExplosion());
+                    }
+                    else
+                    {
+                        player.PlayAnimation("Die");
+                        OnD›edEvent.Invoke(this, EventArgs.Empty);
+                    }
+                }
+
+            }
+            else if (other.transform.CompareTag("obstacle"))
+            {
+                player.PlayAnimation("Die");
+                
+                OnD›edEvent.Invoke(this, EventArgs.Empty);
+            }
+             
+            else
+            {
+
+                if (!other.transform.CompareTag("colorWall") && !other.transform.CompareTag("punchBox") && !other.transform.CompareTag("stopTweening") && !other.transform.CompareTag("fightingPointTrigger"))
+
+                {
+                    Vector3 myScale = transform.localScale;
+                    //scale›ncreaserFactor -= scaleModiferDecrease;
+                    //ClamScaleIncreaseFactorf();
+                    if (transform.localScale.x >= scale›ncreaserFactorMin)
+                    {
+                        transform.DOScale(myScale * scaleModiferDecrease, scaleTime);
+                    }
+                    OnColidedWithStickmanIncreaseLevelNumber?.Invoke(this, -1);
+                    Destroy(other.gameObject);
+                }
+
+            }
         }
+     
     }
     private void StopBoxCastingAction()
     {

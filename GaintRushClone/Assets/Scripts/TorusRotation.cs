@@ -8,7 +8,7 @@ public class TorusRotation : MonoBehaviour
     [SerializeField] private float turnAngel = 10f;
     void Update()
     {
-        //transform.rotation *= Quaternion.Euler(0, turnAngel, 0);
+        
         transform.rotation *= Quaternion.AngleAxis(turnAngel*turnSpeed*Time.deltaTime, Vector3.up);
     }
 }

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelText : MonoBehaviour
 {
     [SerializeField] private TextMeshPro levelText;
+    [SerializeField] private Image backGround;
      private TextMeshPro plusMinusText;
     [SerializeField] private Transform level›ncrasedShower;
     [SerializeField] private float waitTime;
@@ -19,8 +21,16 @@ public class LevelText : MonoBehaviour
     }
     private void Start()
     {
+        FightinpointTriger.instance.StartFightingEvent += ›nstance_StartFightingEvent;
         scaleUp.OnColidedWithStickmanIncreaseLevelNumber += ScaleUp_OnColidedWithStickmanIncreaseLevelNumber;
         UpdateLevelText(1);
+    }
+
+    private void ›nstance_StartFightingEvent(Vector3 arg1, Quaternion arg2)
+    {
+        levelText.gameObject.SetActive(false);
+        backGround.gameObject.SetActive(false);
+        plusMinusText.gameObject.SetActive(false);
     }
 
     private void ScaleUp_OnColidedWithStickmanIncreaseLevelNumber(object sender, int levelNumberMinusOrPlus)
