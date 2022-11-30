@@ -49,10 +49,7 @@ public class BossManager : MonoBehaviour,IDamageable
         childBodies = GetComponentsInChildren<Rigidbody>();
         DoRagdoll(false);
     }
-    private void FixedUpdate()
-    {
-       // rigidBody.MovePosition(rigidBody.position + targetOnlastHit.position * lerpSpeed * Time.fixedDeltaTime);
-    }
+    
     private void ApplyForce(Transform root,Vector3 forcePos, Vector3 forcedir, float radius)
     {
         foreach (Transform child in root)
@@ -73,18 +70,14 @@ public class BossManager : MonoBehaviour,IDamageable
     {
         animator.SetFloat("BlendSpeed", 0);
         animator.SetTrigger("StartBoxing");
-        //transform.SetPositionAndRotation(fightingPoint, _fightingRotation);
+       
         boxTimer -= Time.deltaTime;
         if (boxTimer <= 0 && !goTolastHitPoint)
         {
             boxTimer = boxTimerMax;
             animator.SetTrigger("PunchTheBoss");
         }
-        if (goTolastHitPoint)
-        {
-            //transform.position = Vector3.Lerp(transform.position, targetOnlastHit.position, lerpSpeed * Time.deltaTime);
-           
-        }
+       
     }
     
     public void TakeDame(float dameAmount)

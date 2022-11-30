@@ -80,7 +80,7 @@ public class CamerController : MonoBehaviour
         if (shakeTimer > 0)
         {
             shakeTimer -= Time.deltaTime;    
-            //channelPerlinNoise.m_AmplitudeGain = 0;
+           
             channelPerlinNoise.m_AmplitudeGain=Mathf.Lerp(startingIntensity, 0, 1 - (shakeTimer / shakeTotalTimer));
             if (shakeTimer <= 0)
             {
@@ -93,10 +93,7 @@ public class CamerController : MonoBehaviour
     {
         if (isFollowingBoss && isOnMainCamera==IsOnMainCamera.True)
         {
-            //cinemachineVirtual.m_Follow = boss.GetChild(0);
-            //transform.eulerAngles = new Vector3(9.82999516f, 0, 0);
-            ////cinemachineVirtual.m_Follow = boss;
-            //cinemachineTransposer.m_FollowOffset.z = taregtZOnFollowingBoss;
+            
             cinemachineVirtual.enabled = false;
             mainCamera.GetComponent<CinemachineBrain>().enabled = false;
             Vector3 camPos = Camera.main.transform.position;
@@ -146,9 +143,9 @@ public class CamerController : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x = 0;
         targetPosition.x = transform.position.x;
-        //transform.position = Vector3.MoveTowards(transform.position, targetPosition, movbeSpeed * Time.deltaTime);
+       
         cinemachineTransposer.m_FollowOffset = followOffset;
-        //transform.position = pos;
+       
     }
     public void ShakeCamera(float intesnsity,float timer,Action _StopBoxCastingAction)
     {
@@ -161,7 +158,7 @@ public class CamerController : MonoBehaviour
     }
     private void OnShake(float duration, float strength)
     {
-        //mainCamera.transform.DOShakePosition(duration, strength);
+       
         mainCamera.transform.DOShakeRotation(duration, strength);
     }
 

@@ -94,10 +94,8 @@ public class ScaleUpAnChangeColor : MonoBehaviour
                 LerpLightIntensity();
                 Vector3 myScale = transform.localScale;
                 PlayCollisionParticle(material.color);
-                transform.DOScale(myScale * scale›ncreaserFactor, scaleTime).OnComplete(() =>
-                {
-                    //collosionParticle.gameObject.SetActive(false);
-                });
+                transform.DOScale(myScale * scale›ncreaserFactor, scaleTime);
+                
 
                 OnColidedWithStickmanIncreaseLevelNumber?.Invoke(this, 1);
                 Destroy(other.gameObject);
