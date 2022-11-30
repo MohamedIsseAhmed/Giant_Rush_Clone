@@ -17,6 +17,10 @@ public class SceneManager : MonoBehaviour
     {
         StartCoroutine(ReloadScene());
     }
+    private void OnDisable()
+    {
+        ScaleUpAnChangeColor.instance.OnDÝedEvent -= Ýnstance_OnDÝedEvent;
+    }
     private IEnumerator ReloadScene()
     {
         yield return waitForSecconds;

@@ -50,6 +50,7 @@ public class Player : MonoBehaviour,IDamageable
         isKickingTheBoss = true;
         StartCoroutine(KickTheBoss());
     }
+    
     IEnumerator KickTheBoss()
     {
        
@@ -181,5 +182,11 @@ public class Player : MonoBehaviour,IDamageable
     {
         OnKickingBoss?.Invoke(this, EventArgs.Empty);
         SlowMotion.instance.ApplySlowMotion();
+    }
+    private void OnDisable()
+    {
+        bossManager.KickTheBossEvent -= Ýnstance_KickTheBossEvent;
+        bossManager.OnEnemyDie -= BossManager_OnEnemyDie; bossManager.KickTheBossEvent += Ýnstance_KickTheBossEvent;
+        bossManager.OnEnemyDie -= BossManager_OnEnemyDie;
     }
 }

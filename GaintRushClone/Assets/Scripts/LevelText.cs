@@ -32,7 +32,11 @@ public class LevelText : MonoBehaviour
         backGround.gameObject.SetActive(false);
         plusMinusText.gameObject.SetActive(false);
     }
-
+    private void OnDisable()
+    {
+        FightinpointTriger.instance.StartFightingEvent -= Ýnstance_StartFightingEvent;
+        scaleUp.OnColidedWithStickmanIncreaseLevelNumber -= ScaleUp_OnColidedWithStickmanIncreaseLevelNumber;
+    }
     private void ScaleUp_OnColidedWithStickmanIncreaseLevelNumber(object sender, int levelNumberMinusOrPlus)
     {
         UpdateLevelText(levelNumberMinusOrPlus);

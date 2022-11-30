@@ -31,7 +31,11 @@ public class GameManager : MonoBehaviour
         fightingRotation = _fightingRotation;
       
     }
-
+    private void OnDisable()
+    {
+        ScaleUpAnChangeColor.instance.OnDÝedEvent -= Ýnstance_OnDÝedEvent;
+        FightinpointTriger.instance.StartFightingEvent -= Ýnstance_StartFightingEvent;
+    }
     private void Ýnstance_OnDÝedEvent(object sender, System.EventArgs e)
     { 
         isGameOver = true;

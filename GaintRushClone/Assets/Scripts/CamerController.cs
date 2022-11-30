@@ -55,7 +55,7 @@ public class CamerController : MonoBehaviour
     {
         mainCamera = Camera.main;
         taregt.GetComponent<Player>().OnKickingBoss += CamerController_OnKickingBoss;
-        BossManager.instance.KickTheBossEvent += Ýnstance_KickTheBossEvent;
+       
         BossManager.instance.OnEnemyDie += Ýnstance_OnEnemyDie;
     }
     private void Ýnstance_OnEnemyDie(object sender, EventArgs e)
@@ -67,12 +67,13 @@ public class CamerController : MonoBehaviour
     {
         gokickingPoint = true;
     }
-
-    private void Ýnstance_KickTheBossEvent(object sender, EventArgs e)
+    private void OnDisable()
     {
-     
-     
+        taregt.GetComponent<Player>().OnKickingBoss -= CamerController_OnKickingBoss;
+
+        BossManager.instance.OnEnemyDie -= Ýnstance_OnEnemyDie;
     }
+
 
     private void Update()
     {

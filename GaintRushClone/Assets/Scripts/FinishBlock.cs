@@ -17,15 +17,5 @@ public class FinishBlock : MonoBehaviour
         blockParent.DOScaleZ(scaleEndValue, tweenTime);
         CamerController.ShakeMainCmera(shakeIntensity, duration);
     }
-    private void Update()
-    {
-        //Ray ray=new Ray(transform.position*rayDistance, Vector3.up); 
-        //RaycastHit hit;
-        //if(Physics.Raycast(ray,out hit,100, layerMask, QueryTriggerInteraction.Collide) && hasacaollidedWithObject)
-        //{
-            
-        //    print(hit.transform.name);
-        //}
-        //Debug.DrawLine(ray.origin, ray.origin+ray.direction * rayDistance, Color.red);
-    }
+ 
 }
